@@ -11,20 +11,6 @@
 # the Free Software Foundation.
 #
 
-# modules_dir { \"samba\": }
-
 class samba {
     include samba::base
-}
-
-class samba::base {
-    package{'samba':
-        ensure => present,
-    }
-    service{samba:
-        ensure => running,
-        enable => true,
-        hasstatus => true,
-        require => Package[samba],
-    }
 }
