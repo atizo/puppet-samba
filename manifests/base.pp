@@ -22,11 +22,13 @@ class samba::base {
         hasstatus => true,
         require => Package[samba],
     }
-    #file{'/etc/samba/smb.conf':
-    #    ensure => present,
-    #    source => [ "puppet://$server/files/apache//$fqdn/smb.conf"
-    #                "" ],
-    #    require => Package[samba],
-    #    owner => root, group => 0, mode => 0644;
-    #}
+    file{'/etc/samba/smb.conf':
+        ensure => present,
+        source => [ "puppet://$server/files/samba/$fqdn/smb.conf",
+                    "puppet://$server/files/samba/smb.conf",
+                    "puppet://$server/samba/${operatingsystem}/smb.conf" ],
+                    "puppet://$server/samba/smb.conf" ],
+        require => Package[samba],
+        owner => root, group => 0, mode => 0644;
+    }
 }
