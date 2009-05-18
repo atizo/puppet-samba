@@ -16,6 +16,7 @@ class samba::base {
         ensure => present,
     }
     service{samba:
+        name => 'smb',
         ensure => running,
         enable => true,
         hasstatus => true,
