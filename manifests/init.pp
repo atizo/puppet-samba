@@ -12,5 +12,23 @@
 #
 
 class samba {
-    include samba::base
+    package{ [ 'samba', 'samba-client' ]:
+        ensure => present,
+    }
+    service{'samba':
+        name => 'smb',
+        ensure => running,
+        enable => true,
+        hasstatus => true,
+        require => Package['samba'],
+    }
+    file{'/etc/samba/smb.conf':
+        source => [ "puppet://$server/sitze-samba/$fqdn/smb.conf",
+                    "puppet://$server/site-samba/$operatingsystem/smb.conf",
+                    "puppet://$server/site-samba/smb.conf",
+                    "puppet://$server/samba/$operatingsystem/smb.conf",
+                    "puppet://$server/samba/smb.conf" ],
+        require => Package['samba'],
+        owner => root, group => 0, mode => 0644;
+    }
 }
